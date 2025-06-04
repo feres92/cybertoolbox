@@ -1,11 +1,45 @@
 <!DOCTYPE html>
 <html>
-<head><title>CyberToolbox</title></head>
+<head>
+  <title>CyberToolbox</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 40px;
+      background-color: #f4f4f4;
+    }
+    h1 {
+      color: #333;
+    }
+    form {
+      margin-bottom: 20px;
+    }
+    input, button {
+      padding: 10px;
+      margin: 5px;
+    }
+    a.button {
+      padding: 10px 15px;
+      background-color: #3490dc;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+    }
+    a.button:hover {
+      background-color: #2779bd;
+    }
+  </style>
+</head>
 <body>
   <h1>Bienvenue sur CyberToolbox</h1>
+
+  <!-- Formulaire de scan Nmap -->
   <form action="/scan" method="POST">
     <input type="text" name="target" placeholder="Entrez une IP">
     <button type="submit">Scan Nmap</button>
   </form>
+
+  <!-- Bouton vers OpenVAS -->
+  <a href="/openvas" class="button">Scan OpenVAS</a>
 </body>
 </html>
