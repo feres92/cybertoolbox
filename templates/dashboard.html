@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CyberToolbox - Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-900">
+  <div class="flex h-screen">
+    <!-- Sidebar -->
+    <aside class="w-64 bg-white shadow-md">
+      <div class="p-6 font-bold text-lg">CyberToolbox</div>
+      <nav class="px-4">
+        <ul class="space-y-2">
+          <li><a href="/dashboard" class="block py-2 px-4 rounded bg-gray-200">Dashboard</a></li>
+          <li><a href="/logout" class="block py-2 px-4 rounded hover:bg-gray-200">Déconnexion</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 p-6 overflow-y-auto">
+      <div class="mb-6">
+        <h1 class="text-2xl font-semibold mb-2">Tableau de bord</h1>
+        <p class="text-gray-600">Bienvenue dans l'interface de votre toolbox cybersécurité</p>
+      </div>
+
+      <!-- Formulaire de scan -->
+      <div class="bg-white p-4 shadow rounded mb-6">
+        <form action="/scan" method="post" class="flex items-center space-x-4">
+          <input type="text" name="target" placeholder="Entrez une IP (ex: 127.0.0.1)" required class="flex-1 border rounded px-3 py-2">
+          <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded">Scanner</button>
+        </form>
+      </div>
+
+      <!-- Stats -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+        <div class="bg-white p-4 shadow rounded">
+          <h2 class="text-sm text-gray-500">IP scannées</h2>
+          <p class="text-2xl font-bold">17</p>
+        </div>
+        <div class="bg-white p-4 shadow rounded">
+          <h2 class="text-sm text-gray-500">Failles détectées</h2>
+          <p class="text-2xl font-bold text-red-600">5</p>
+        </div>
+        <div class="bg-white p-4 shadow rounded">
+          <h2 class="text-sm text-gray-500">Fichiers analysés</h2>
+          <p class="text-2xl font-bold">9</p>
+        </div>
+      </div>
+
+      <!-- Table -->
+      <div class="bg-white shadow rounded">
+        <table class="min-w-full text-sm text-left">
+          <thead class="bg-gray-100">
+            <tr>
+              <th class="px-6 py-3">IP</th>
+              <th class="px-6 py-3">Ports Ouverts</th>
+              <th class="px-6 py-3">Statut</th>
+              <th class="px-6 py-3">Dernier Scan</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="border-b">
+              <td class="px-6 py-4">192.168.1.12</td>
+              <td class="px-6 py-4">22, 80, 443</td>
+              <td class="px-6 py-4 text-red-500">Vulnérable</td>
+              <td class="px-6 py-4">04/06/2025</td>
+            </tr>
+            <tr class="border-b">
+              <td class="px-6 py-4">10.0.0.5</td>
+              <td class="px-6 py-4">445</td>
+              <td class="px-6 py-4 text-green-600">Sain</td>
+              <td class="px-6 py-4">03/06/2025</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+</body>
+</html>
