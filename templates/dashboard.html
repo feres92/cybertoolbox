@@ -39,20 +39,22 @@
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
         <div class="bg-white p-4 shadow rounded">
           <h2 class="text-sm text-gray-500">IP scannées</h2>
-          <p class="text-2xl font-bold">17</p>
+          <p class="text-2xl font-bold">{{ history|length }}</p>
         </div>
         <div class="bg-white p-4 shadow rounded">
           <h2 class="text-sm text-gray-500">Failles détectées</h2>
-          <p class="text-2xl font-bold text-red-600">5</p>
+          <p class="text-2xl font-bold text-red-600">
+            {{ history | selectattr('statut', 'equalto', 'Vulnérable') | list | length }}
+          </p>
         </div>
         <div class="bg-white p-4 shadow rounded">
           <h2 class="text-sm text-gray-500">Fichiers analysés</h2>
-          <p class="text-2xl font-bold">9</p>
+          <p class="text-2xl font-bold">0</p> <!-- À mettre à jour plus tard -->
         </div>
       </div>
 
       <!-- Table -->
-      <div class="bg-white shadow rounded">
+      <div class="bg-white shadow rounded overflow-x-auto">
         <table class="min-w-full text-sm text-left">
           <thead class="bg-gray-100">
             <tr>
@@ -63,18 +65,14 @@
             </tr>
           </thead>
           <tbody>
-            <tr class="border-b">
-              <td class="px-6 py-4">192.168.1.12</td>
-              <td class="px-6 py-4">22, 80, 443</td>
-              <td class="px-6 py-4 text-red-500">Vulnérable</td>
-              <td class="px-6 py-4">04/06/2025</td>
-            </tr>
-            <tr class="border-b">
-              <td class="px-6 py-4">10.0.0.5</td>
-              <td class="px-6 py-4">445</td>
-              <td class="px-6 py-4 text-green-600">Sain</td>
-              <td class="px-6 py-4">03/06/2025</td>
-            </tr>
+            {% for scan in history %}
+              <tr class="border-b">
+                <td class="px-6 py-4">{{ scan.ip }}</td>
+                <td class="px-6 py-4">{{ scan.ports }}</td>
+                <td class="px-6 py-4 {% if scan.statut == 'Vulnérable' %}text-red-500{% else %}text-green-600{% endif %}">{{ scan.statut }}</td>
+                <td class="px-6 py-4">{{ scan.date }}</td>
+              </tr>
+            {% endfor %}
           </tbody>
         </table>
       </div>
