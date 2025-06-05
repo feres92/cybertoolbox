@@ -1,5 +1,5 @@
 def scan_file_with_yara(filename):
-    # Simulation simple : nom du fichier ou extension déclenche alerte
+    # Simulation simple
     if filename.lower().endswith(('.exe', '.bat', '.vbs')):
         return {
             "verdict": "Malveillant",
