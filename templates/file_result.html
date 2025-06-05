@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head><meta charset="UTF-8"><title>Résultat Scan</title></head>
+<body>
+  <h2>Résultat pour {{ filename }}</h2>
+  <p><strong>Verdict :</strong> {{ result.verdict }}</p>
+  <ul>
+    {% for d in result.details %}
+      <li>{{ d }}</li>
+    {% endfor %}
+  </ul>
+  <a href="/file">⬅ Refaire un scan</a>
+  <a href="/dashboard">🏠 Dashboard</a>
+</body>
+</html>
