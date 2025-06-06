@@ -1,5 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 from modules.nmap_scan import run_nmap
+from modules.sqlmap_module import run_sqlmap_scan
+from modules.zap_module import run_zap_scan
 from openvas_scan import get_simulated_openvas_results
 from file_scan import scan_file_with_yara
 from werkzeug.utils import secure_filename
@@ -7,7 +9,7 @@ import json, os
 from datetime import datetime
 
 app = Flask(__name__)
-app.secret_key = 'supersecretkey'  # Change ce mot de passe !
+app.secret_key = 'supersecretkey'
 UPLOAD_FOLDER = 'uploads'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
@@ -53,7 +55,7 @@ def scan():
     scan_entry = {
         "ip": ip,
         "ports": ", ".join(result['open_ports']),
-        "status": "Vulnérable" if result['open_ports'] else "Sain",
+        "statut": "Vulnérable" if result['open_ports'] else "Sain",
         "date": datetime.now().strftime("%d/%m/%Y")
     }
 
@@ -91,6 +93,30 @@ def file_scan():
             return render_template("file_result.html", result=result, filename=filename)
 
     return render_template("file_upload.html")
+
+@app.route("/sqlmap", methods=['GET', 'POST'])
+def sqlmap():
+    if 'user' not in session:
+        return redirect(url_for('login'))
+
+    if request.method == 'POST':
+        url = request.form['url']
+        result = run_sqlmap_scan(url)
+        return render_template("sqlmap_result.html", result=result)
+
+    return render_template("scan_form.html")
+
+@app.route("/zap", methods=['GET', 'POST'])
+def zap():
+    if 'user' not in session:
+        return redirect(url_for('login'))
+
+    if request.method == 'POST':
+        url = request.form['url']
+        result = run_zap_scan(url)
+        return render_template("zap_result.html", result=result)
+
+    return render_template("scan_form.html")
 
 if __name__ == '__main__':
     app.run(debug=True)

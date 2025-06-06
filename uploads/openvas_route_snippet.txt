@@ -1,0 +1,7 @@
+from flask import Flask, render_template
+from openvas_scan import get_simulated_openvas_results
+
+@app.route("/openvas")
+def openvas():
+    results = get_simulated_openvas_results()
+    return render_template("openvas_results.html", results=results)

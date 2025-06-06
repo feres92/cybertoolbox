@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head><meta charset="UTF-8"><title>Résultat ZAP</title></head>
+<body>
+  <h2>Résultat ZAP pour {{ result.url }}</h2>
+  <ul>
+    {% for alert in result.alerts %}
+      <li><strong>{{ alert.name }}</strong> (Risque : {{ alert.risk }}) — Paramètre : <code>{{ alert.param }}</code></li>
+    {% endfor %}
+  </ul>
+  <a href="/dashboard">⬅ Retour</a>
+</body>
+</html>

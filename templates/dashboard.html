@@ -1,83 +1,113 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CyberToolbox - Dashboard</title>
+  <meta charset="UTF-8" />
+  <title>CyberToolbox - UI Complète</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <script src="https://cdn.tailwindcss.com"></script>
+  <style>.hidden { display: none; }</style>
 </head>
-<body class="bg-gray-100 text-gray-900">
-  <div class="flex h-screen">
-    <!-- Sidebar -->
-    <aside class="w-64 bg-white shadow-md">
-      <div class="p-6 font-bold text-lg">CyberToolbox</div>
-      <nav class="px-4">
-        <ul class="space-y-2">
-          <li><a href="/dashboard" class="block py-2 px-4 rounded bg-gray-200">Dashboard</a></li>
-          <li><a href="/file" class="block py-2 px-4 rounded hover:bg-gray-200">Analyse Fichier 🧪</a></li>
-          <li><a href="/logout" class="block py-2 px-4 rounded hover:bg-gray-200">Déconnexion</a></li>
-        </ul>
-      </nav>
-    </aside>
+<body class="bg-gray-100 text-gray-900 h-screen flex overflow-hidden">
 
-    <!-- Main Content -->
-    <main class="flex-1 p-6 overflow-y-auto">
-      <div class="mb-6">
-        <h1 class="text-2xl font-semibold mb-2">Tableau de bord</h1>
-        <p class="text-gray-600">Bienvenue dans l'interface de votre toolbox cybersécurité</p>
-      </div>
+  <!-- Sidebar -->
+  <aside class="w-64 bg-gray-800 text-white flex flex-col">
+    <div class="h-16 flex items-center justify-center text-xl font-bold border-b border-gray-700">CyberToolbox</div>
+    <nav class="flex-1 p-4 space-y-3 text-sm">
+      <button onclick="showSection('dashboard')" class="block w-full text-left hover:text-blue-400">Dashboard</button>
+      <button onclick="showSection('rh')" class="block w-full text-left hover:text-blue-400">Pôle RH</button>
+      <button onclick="showSection('secu')" class="block w-full text-left hover:text-blue-400">Pôle Sécurité</button>
+      <button onclick="showSection('saas')" class="block w-full text-left hover:text-blue-400">Pôle SaaS</button>
+      <button onclick="showSection('infra')" class="block w-full text-left hover:text-blue-400">Pôle Infrastructure</button>
+      <button onclick="showSection('stock')" class="block w-full text-left hover:text-blue-400">Pôle Stockage</button>
+      <button onclick="showSection('report')" class="block w-full text-left hover:text-blue-400">Rapports</button>
+    </nav>
+    <div class="p-4 text-xs text-center text-gray-400 border-t border-gray-700">© 2025 CyberToolbox</div>
+  </aside>
 
-      <!-- Formulaire de scan + OpenVAS -->
-      <div class="bg-white p-4 shadow rounded mb-6">
-        <form action="/scan" method="post" class="flex flex-col md:flex-row items-center gap-4">
-          <input type="text" name="target" placeholder="Entrez une IP (ex: 127.0.0.1)" required class="flex-1 border rounded px-3 py-2">
-          <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded">Scanner</button>
-          <a href="/openvas" class="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700">Scan OpenVAS</a>
-        </form>
-      </div>
+  <!-- Main Content -->
+  <main class="flex-1 overflow-y-auto p-6">
 
-      <!-- Stats -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-        <div class="bg-white p-4 shadow rounded">
-          <h2 class="text-sm text-gray-500">IP scannées</h2>
-          <p class="text-2xl font-bold">{{ history|length }}</p>
+    <!-- Dashboard section -->
+    <section id="dashboard" class="section">
+      <h2 class="text-2xl font-bold mb-6">Vue d'ensemble</h2>
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+        <div class="bg-white p-4 rounded shadow border-l-4 border-red-600">
+          <h3 class="text-sm text-red-600 font-semibold">CRITICAL</h3>
+          <p class="text-2xl font-bold">32</p>
+          <p class="text-xs text-gray-500 mt-1">↓ 5% depuis 30 jours</p>
         </div>
-        <div class="bg-white p-4 shadow rounded">
-          <h2 class="text-sm text-gray-500">Failles détectées</h2>
-          <p class="text-2xl font-bold text-red-600">
-            {{ history | selectattr('statut', 'equalto', 'Vulnérable') | list | length }}
-          </p>
+        <div class="bg-white p-4 rounded shadow border-l-4 border-orange-500">
+          <h3 class="text-sm text-orange-500 font-semibold">HIGH</h3>
+          <p class="text-2xl font-bold">123</p>
+          <p class="text-xs text-gray-500 mt-1">↓ 25% depuis 30 jours</p>
         </div>
-        <div class="bg-white p-4 shadow rounded">
-          <h2 class="text-sm text-gray-500">Fichiers analysés</h2>
-          <p class="text-2xl font-bold">0</p> <!-- À mettre à jour plus tard -->
+        <div class="bg-white p-4 rounded shadow border-l-4 border-yellow-400">
+          <h3 class="text-sm text-yellow-500 font-semibold">MEDIUM</h3>
+          <p class="text-2xl font-bold">11</p>
+          <p class="text-xs text-gray-500 mt-1">↓ 10% depuis 30 jours</p>
+        </div>
+        <div class="bg-white p-4 rounded shadow border-l-4 border-green-500">
+          <h3 class="text-sm text-green-600 font-semibold">LOW</h3>
+          <p class="text-2xl font-bold">84</p>
+          <p class="text-xs text-gray-500 mt-1">↓ 1% depuis 30 jours</p>
         </div>
       </div>
+    </section>
 
-      <!-- Table -->
-      <div class="bg-white shadow rounded overflow-x-auto">
-        <table class="min-w-full text-sm text-left">
-          <thead class="bg-gray-100">
-            <tr>
-              <th class="px-6 py-3">IP</th>
-              <th class="px-6 py-3">Ports Ouverts</th>
-              <th class="px-6 py-3">Statut</th>
-              <th class="px-6 py-3">Dernier Scan</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for scan in history %}
-              <tr class="border-b">
-                <td class="px-6 py-4">{{ scan.ip }}</td>
-                <td class="px-6 py-4">{{ scan.ports }}</td>
-                <td class="px-6 py-4 {% if scan.statut == 'Vulnérable' %}text-red-500{% else %}text-green-600{% endif %}">{{ scan.statut }}</td>
-                <td class="px-6 py-4">{{ scan.date }}</td>
-              </tr>
-            {% endfor %}
-          </tbody>
-        </table>
+    <!-- Sections by Pôle -->
+    <section id="rh" class="section hidden">
+      <h2 class="text-xl font-semibold mb-4">Pôle RH</h2>
+      <div class="space-y-4">
+        <div class="bg-white p-4 rounded shadow">
+          Analyse de fichiers <a href="/file" class="text-blue-500 hover:underline">→ Accéder</a>
+        </div>
       </div>
-    </main>
-  </div>
+    </section>
+
+    <section id="secu" class="section hidden">
+      <h2 class="text-xl font-semibold mb-4">Pôle Sécurité</h2>
+      <div class="space-y-4">
+        <div class="bg-white p-4 rounded shadow">SQLMap <a href="/sqlmap" class="text-blue-500 hover:underline">→ Accéder</a></div>
+        <div class="bg-white p-4 rounded shadow">ZAP <a href="/zap" class="text-blue-500 hover:underline">→ Accéder</a></div>
+        <div class="bg-gray-200 p-4 rounded shadow text-gray-500">Metasploit (à venir)</div>
+      </div>
+    </section>
+
+    <section id="saas" class="section hidden">
+      <h2 class="text-xl font-semibold mb-4">Pôle SaaS</h2>
+      <div class="space-y-4">
+        <div class="bg-gray-200 p-4 rounded shadow text-gray-500">Burp / Postman / OWASP DC (à venir)</div>
+      </div>
+    </section>
+
+    <section id="infra" class="section hidden">
+      <h2 class="text-xl font-semibold mb-4">Pôle Infrastructure</h2>
+      <div class="space-y-4">
+        <div class="bg-white p-4 rounded shadow">Nmap <a href="/dashboard" class="text-blue-500 hover:underline">→ Accéder</a></div>
+        <div class="bg-white p-4 rounded shadow">OpenVAS <a href="/openvas" class="text-blue-500 hover:underline">→ Accéder</a></div>
+      </div>
+    </section>
+
+    <section id="stock" class="section hidden">
+      <h2 class="text-xl font-semibold mb-4">Pôle Stockage</h2>
+      <div class="space-y-4">
+        <div class="bg-gray-200 p-4 rounded shadow text-gray-500">Wireshark (à venir)</div>
+      </div>
+    </section>
+
+    <section id="report" class="section hidden">
+      <h2 class="text-xl font-semibold mb-4">Rapports</h2>
+      <div class="space-y-4">
+        <div class="bg-white p-4 rounded shadow">Génération PDF ou HTML <a href="/report" class="text-blue-500 hover:underline">→ Voir</a></div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    function showSection(id) {
+      document.querySelectorAll('.section').forEach(sec => sec.classList.add('hidden'));
+      document.getElementById(id).classList.remove('hidden');
+    }
+  </script>
 </body>
 </html>
