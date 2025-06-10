@@ -20,6 +20,7 @@
       <button onclick="showSection('infra')" class="block w-full text-left hover:text-blue-400">Pôle Infrastructure</button>
       <button onclick="showSection('stock')" class="block w-full text-left hover:text-blue-400">Pôle Stockage</button>
       <button onclick="showSection('report')" class="block w-full text-left hover:text-blue-400">Rapports</button>
+      <a href="/logout" class="block w-full text-left hover:text-red-400">Déconnexion</a>
     </nav>
     <div class="p-4 text-xs text-center text-gray-400 border-t border-gray-700">© 2025 CyberToolbox</div>
   </aside>
@@ -52,6 +53,11 @@
           <p class="text-xs text-gray-500 mt-1">↓ 1% depuis 30 jours</p>
         </div>
       </div>
+      <!-- Formulaire Nmap -->
+      <form action="/scan" method="post" class="flex flex-col md:flex-row gap-4 mb-6">
+        <input type="text" name="target" placeholder="Entrez une IP (ex: 127.0.0.1)" required class="flex-1 border rounded px-3 py-2">
+        <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded">Scanner avec Nmap</button>
+      </form>
     </section>
 
     <!-- Sections by Pôle -->
@@ -69,6 +75,7 @@
       <div class="space-y-4">
         <div class="bg-white p-4 rounded shadow">SQLMap <a href="/sqlmap" class="text-blue-500 hover:underline">→ Accéder</a></div>
         <div class="bg-white p-4 rounded shadow">ZAP <a href="/zap" class="text-blue-500 hover:underline">→ Accéder</a></div>
+        <div class="bg-white p-4 rounded shadow">OpenVAS <a href="/openvas" class="text-blue-500 hover:underline">→ Accéder</a></div>
         <div class="bg-gray-200 p-4 rounded shadow text-gray-500">Metasploit (à venir)</div>
       </div>
     </section>
@@ -83,8 +90,7 @@
     <section id="infra" class="section hidden">
       <h2 class="text-xl font-semibold mb-4">Pôle Infrastructure</h2>
       <div class="space-y-4">
-        <div class="bg-white p-4 rounded shadow">Nmap <a href="/dashboard" class="text-blue-500 hover:underline">→ Accéder</a></div>
-        <div class="bg-white p-4 rounded shadow">OpenVAS <a href="/openvas" class="text-blue-500 hover:underline">→ Accéder</a></div>
+        <div class="bg-white p-4 rounded shadow">Nmap <a href="#dashboard" onclick="showSection('dashboard')" class="text-blue-500 hover:underline">→ Accéder</a></div>
       </div>
     </section>
 

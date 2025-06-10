@@ -1,10 +1,10 @@
-import subprocess
+import nmap
 
 def run_nmap(ip):
-    try:
-        result = subprocess.run(['nmap', '-F', ip], capture_output=True, text=True, timeout=5)
-        return result.stdout
-    except subprocess.TimeoutExpired:
-        return "Scan trop long ou bloqué (timeout)"
-    except Exception as e:
-        return f"Erreur : {str(e)}"
+    scanner = nmap.PortScanner()
+    scanner.scan(ip, arguments='-T4 -F')
+    open_ports = []
+    for proto in scanner[ip].all_protocols():
+        ports = scanner[ip][proto].keys()
+        open_ports.extend([str(port) for port in ports])
+    return {'ip': ip, 'open_ports': open_ports}
